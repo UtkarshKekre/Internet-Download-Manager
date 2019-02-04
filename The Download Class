@@ -1,0 +1,2 @@
+# The Download Class
+The Download class is the workhorse of the Internet Download Manager. it's primary purpose is to download the file and save the contents to disk. Each time a new download is added to the download manager, a new object is initiated to handle the download.
