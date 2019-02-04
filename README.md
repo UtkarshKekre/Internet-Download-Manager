@@ -14,3 +14,7 @@ Language Used : JAVA , the GUI has been made using swing.
 
 ##### Another Sceen shot
 ![screenshot 22](https://cloud.githubusercontent.com/assets/24290847/22510686/dc9405c8-e8b8-11e6-8d27-152c3e79fc40.png)
+
+# Functionality
+The Download Manager is broken into a few classes for natural separation of functional components. These are Download, DownloadsTableModel, ProgressRenderer and DownloadManager Classes.<br>
+
