@@ -17,4 +17,5 @@ Language Used : JAVA , the GUI has been made using swing.
 
 # Functionality
 The Download Manager is broken into a few classes for natural separation of functional components. These are Download, DownloadsTableModel, ProgressRenderer and DownloadManager Classes.<br>
-
+1. DownloadManager - Responsible for GUI interface and makes use of DownloadsTableModel and ProgressRenderer for displaying current list of downloads.<br>
+2. Download - Represents "managed" download and is reponsible for actual downloading of a file
