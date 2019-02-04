@@ -1,15 +1,9 @@
-import
-java.awt.*;
-import
-java.awt.event.*;
-import
-java.net.*;
-import
-java.util.*;
-import
-javax.swing.*;
-import
-javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.event.*;
 // The Download Manager.
 public class DownloadManager extends JFrame
 implements Observer
