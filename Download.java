@@ -10,28 +10,15 @@ public static final String STATUSES[] = {"Downloading",
 "Paused", "Complete", "Cancelled", "Error"};
 // These are the status
 codes.
-public static final int
-DOWNLOADING = 0;
-public static final int
-PAUSED = 1;
-public static final int
-COMPLETE = 2;
-public static final int
-CANCELLED = 3;
-public static final int
-ERROR = 4;
-private
-URL
-url; // download URL
-private
-int
-size; // size of download in bytes
-private
-int
-downloaded; // number of bytes downloaded
-private
-int
-status; // current status of download
+public static final int DOWNLOADING = 0;
+public static final int PAUSED = 1;
+public static final int COMPLETE = 2;
+public static final int CANCELLED = 3;
+public static final int ERROR = 4;
+private URL url; // download URL
+private int size; // size of download in bytes
+private int downloaded; // number of bytes downloaded
+private int status; // current status of download
 // Constructor for Download.
 public Download(URL url) {
 this.url = url;
