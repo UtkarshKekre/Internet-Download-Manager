@@ -19,3 +19,15 @@ Language Used : JAVA , the GUI has been made using swing.
 The Download Manager is broken into a few classes for natural separation of functional components. These are Download, DownloadsTableModel, ProgressRenderer and DownloadManager Classes.<br>
 1. DownloadManager - Responsible for GUI interface and makes use of DownloadsTableModel and ProgressRenderer for displaying current list of downloads.<br>
 2. Download - Represents "managed" download and is reponsible for actual downloading of a file
+
+# The Download Class
+The Download class is the workhorse of the Download Manager. Its primary purpose is todownload a file and save that file's contents to disk. Each time a new download is added to the Download Manager, a new Download object is instantiated to handle the download. The Download Manager has the ability to download multiple files at once. To achieve this, it's necessary for each of the simultaneous downloads to run independently. It's alsonecessary for each individual download to manage its own state so that it can be reflected in the GUI. This is accomplished with the Download class. The entire code for Download is shown here. Notice that it extends Observable andimplements Runnable.
+
+# The ProgressRenderer Class
+The ProgressRenderer class is a small utility class that is used to render the current progress of a download listed in the GUI's "Downloads" JTable instance. Normally, a JTable instance renders each cell's data as text. However, often it's particularly useful to render a cell's dataas something other than text. In the Download Manager 's case, we want to render each ofthe table's Progress column cells as progress bars. The ProgressRenderer class shown heremakes that possible. Notice that it extends JProgressBar and implements TableCellRenderer
+
+# The DownloadsTableModel Class
+The DownloadsTableModel class houses the Download Manager 's list of downloadsand is the backing data source for the GUI's "Downloads" JTable instance. It extends AbstractTableModel and implements the obserever interface.
+
+# The DownloadManager Class
+The DownloadManager class isresponsible for creating and running the Download Manager 's GUI. This class has a main( )method declared, so on execution it will be invoked first. The main( ) method instantiates anew DownloadManager class instance and then calls its show( ) method, which causes it tobe displayed. It extends JFrame and implements Observer.
