@@ -31,3 +31,14 @@ The DownloadsTableModel class houses the Download Manager's list of downloads an
 
 # The DownloadManager Class
 The DownloadManager class isresponsible for creating and running the Download Manager's GUI. This class has a main( )method declared, so on execution it will be invoked first. The main( ) method instantiates anew DownloadManager class instance and then calls its show( ) method, which causes it to be displayed. It extends JFrame and implements Observer.
+
+# Compiling Download Manager
+Compile DonwloadManager like this<br>
+javac DownloadManager.java DownloadsTableModel.java ProgressRenderer.java Download.java
+
+# Running Donwload Manager
+Run DownloadManager like this<br>
+javaw DownloadManager<br>
+
+Thank you!
+I hope you like this project :)
