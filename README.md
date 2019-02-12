@@ -18,7 +18,7 @@ Language Used : JAVA , the GUI has been made using swing.
 # Functionality
 The Download Manager is broken into a few classes for natural separation of functional components. These are Download, DownloadsTableModel, ProgressRenderer and DownloadManager Classes.<br>
 1. DownloadManager - Responsible for GUI interface and makes use of DownloadsTableModel and ProgressRenderer for displaying current list of downloads.<br>
-2. Download - Represents "managed" download and is reponsible for actual downloading of a file
+2. Download - Represents "managed" download and is reponsible for actual downloading of a file.
 
 # The Download Class
 The Download class is the workhorse of the Download Manager. Its primary purpose is to download a file and save that file's contents to disk. Each time a new download is added to the Download Manager, a new Download object is instantiated to handle the download. The Download Manager has the ability to download multiple files at once. To achieve this, it's necessary for each of the simultaneous downloads to run independently. It's also necessary for each individual download to manage its own state so that it can be reflected in the GUI. This is accomplished with the Download class. The entire code for Download is shown here. Notice that it extends Observable andimplements Runnable.
