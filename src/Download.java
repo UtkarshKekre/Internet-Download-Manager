@@ -1,10 +1,10 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
-
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import javax.net.ssl.HttpsURLConnection;
 
-class Download extends Observable implements Runnable {
+class Download implements Runnable {
     private static final int MAX_BUFFER_SIZE = 1024;
     public static final String STATUSES[] = { "Downloading",
             "Paused", "Complete", "Cancelled", "Error" };
@@ -18,21 +18,30 @@ class Download extends Observable implements Runnable {
     private int downloaded;
     private int status;
 
+    private PropertyChangeSupport support;
+
     public Download(URL url) {
         this.url = url;
         size = -1;
         downloaded = 0;
         status = DOWNLOADING;
-        download();
+        support = new PropertyChangeSupport(this);
     }
 
     private void stateChanged() {
-        setChanged();
-        notifyObservers();
+        support.firePropertyChange("state", null, this);
     }
 
-    public String getUrl() {
-        return url.toString();
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
+    }
+
+    public URL getUrl() {
+        return url;
     }
 
     public int getSize() {
@@ -73,7 +82,7 @@ class Download extends Observable implements Runnable {
         thread.start();
     }
 
-    private String getFileName(URL url) {
+    public String getFileName(URL url) {
         String fileName = url.getFile();
         return fileName.substring(fileName.lastIndexOf('/') + 1);
     }

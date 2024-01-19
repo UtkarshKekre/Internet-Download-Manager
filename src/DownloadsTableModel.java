@@ -1,9 +1,11 @@
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 class DownloadsTableModel extends AbstractTableModel
-        implements Observer {
+        implements PropertyChangeListener {
     private static final String[] columnNames = { "URL", "Size",
             "Progress", "Status" };
     private static final Class<?>[] columnClasses = { String.class,
@@ -11,18 +13,21 @@ class DownloadsTableModel extends AbstractTableModel
     private ArrayList<Download> downloadList = new ArrayList<Download>();
 
     public void addDownload(Download download) {
-        download.addObserver(this);
+        download.addPropertyChangeListener(this);
         downloadList.add(download);
-        fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
+        int index = downloadList.indexOf(download);
+        fireTableRowsInserted(index, index);
+    }
+
+    public void clearDownload(int row) {
+        Download download = downloadList.get(row);
+        download.removePropertyChangeListener(this);
+        downloadList.remove(row);
+        fireTableRowsDeleted(row, row);
     }
 
     public Download getDownload(int row) {
         return downloadList.get(row);
-    }
-
-    public void clearDownload(int row) {
-        downloadList.remove(row);
-        fireTableRowsDeleted(row, row);
     }
 
     public int getColumnCount() {
@@ -45,7 +50,8 @@ class DownloadsTableModel extends AbstractTableModel
         Download download = downloadList.get(row);
         switch (col) {
             case 0:
-                return download.getUrl();
+                String fileName = download.getFileName(download.getUrl());
+                return fileName;
             case 1:
                 int size = download.getSize();
                 size /= (1024 * 1024);
@@ -58,8 +64,10 @@ class DownloadsTableModel extends AbstractTableModel
         return "";
     }
 
-    public void update(Observable o, Object arg) {
-        int index = downloadList.indexOf(o);
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Download download = (Download) evt.getSource();
+        int index = downloadList.indexOf(download);
         fireTableRowsUpdated(index, index);
     }
 }

@@ -1,12 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
-import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 public class DownloadManager extends JFrame
-        implements Observer {
+        implements PropertyChangeListener {
     private JTextField addTextField;
     private DownloadsTableModel tableModel;
     private JTable table;
@@ -133,11 +135,11 @@ public class DownloadManager extends JFrame
 
     private void tableSelectionChanged() {
         if (selectedDownload != null)
-            selectedDownload.deleteObserver(DownloadManager.this);
+            selectedDownload.removePropertyChangeListener(DownloadManager.this);
 
         if (!clearing && table.getSelectedRow() > -1) {
             selectedDownload = tableModel.getDownload(table.getSelectedRow());
-            selectedDownload.addObserver(DownloadManager.this);
+            selectedDownload.addPropertyChangeListener(DownloadManager.this);
             updateButtons();
         }
     }
@@ -202,17 +204,23 @@ public class DownloadManager extends JFrame
         }
     }
 
-    public void update(Observable o, Object arg) {
-        if (selectedDownload != null && selectedDownload.equals(o))
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (selectedDownload != null && selectedDownload.equals(evt.getSource())) {
+            // Update buttons if the selected download has changed.
             updateButtons();
+        }
     }
 
     public static void main(String[] args) {
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                DownloadManager manager = new DownloadManager();
-                manager.setVisible(true);
+                try {
+                    DownloadManager manager = new DownloadManager();
+                    manager.setVisible(true);
+                } catch (StringIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
